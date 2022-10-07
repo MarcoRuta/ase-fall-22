@@ -62,10 +62,14 @@ class Game:
         """Process the current move and check if it's a win."""
         row, col = move.row, move.col
         self._current_moves[row][col] = move
-        # TODO: check whether the current move leads to a winning combo.
-        # Do not return any values but set variables  self._has_winner 
-        # and self.winner_combo in case of winning combo.
-        # Hint: you can scan pre-computed winning combos in self._winning_combos
+
+        for combo in self._winnig_combos:
+            if all(self._current_moves[row][col].
+                   label == move.label for ros, col in
+                   combo):
+                self._has_winner = True
+                self.winner_combo = combo
+                break
 
 
     def has_winner(self):
