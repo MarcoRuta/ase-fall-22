@@ -96,7 +96,13 @@ class Game:
         """Return a toggled player."""
         # TODO: switches self.current_player to the other player.
         # Hint: https://docs.python.org/3/library/functions.html#next
-       
+
+        try:
+            self.current_player = next(self._players)
+        except StopIteration:
+            print("StopIteration error.\n")
+            exit(-1)
+
     def reset_game(self):
         """Reset the game state to play again."""
         for row, row_content in enumerate(self._current_moves):
