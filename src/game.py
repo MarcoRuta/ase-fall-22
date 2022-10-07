@@ -31,6 +31,8 @@ class Game:
         self._setup_board()
 
     def _setup_board(self):
+        """[Move(), Move(), ...][...][...]"""
+
         self._current_moves = [
             [Move(row, col) for col in range(self.board_size)]
             for row in range(self.board_size)
@@ -39,6 +41,7 @@ class Game:
 
     def _get_winning_combos(self):
         """Return all possible winning combinations, i.e. rows, columns and diagonals."""
+        
         rows = [
             [(move.row, move.col) for move in row]
             for row in self._current_moves
@@ -56,26 +59,21 @@ class Game:
         # contain an empty string (i.e. ""). 
         # Use variables no_winner and move_not_played.
 
-        row, col = move.row, move.col
-        move_not_played: bool = False
-        no_winner: bool = False
-        correct_value: bool = False
-        label = move.label
-        
-        if (label == ""): move_not_played = True
-        if((row < self.board_size and row >= 0) and 
-            (col < self.board_size and col >= 0)): correct_value = True
-        if (not self._has_winner): no_winner = True
-        return no_winner and move_not_played and correct_value
+        label = self._current_moves[move.row][move.col].label
+
+        if (move.label == "" or label != ""): 
+            return False 
+
+        return not self.has_winner()
 
     def process_move(self, move):
         """Process the current move and check if it's a win."""
         row, col = move.row, move.col
         self._current_moves[row][col] = move
 
-        for combo in self._winnig_combos:
+        for combo in self._winning_combos:
             if all(self._current_moves[row][col].
-                   label == move.label for ros, col in
+                   label == move.label for row, col in
                    combo):
                 self._has_winner = True
                 self.winner_combo = combo
