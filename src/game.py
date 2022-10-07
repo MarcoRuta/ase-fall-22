@@ -76,6 +76,21 @@ class Game:
         """Return True if the game is tied, and False otherwise."""
         # TODO: check whether a tie was reached.
         # There is no winner and all moves have been tried.
+        
+        moves_left = False
+        # Iterates through all the moves
+        for move in self._current_moves:
+            # Checks if a move in that cell has been made
+            if not self._current_moves[move.row][move.col]:
+                moves_left = True
+                print("There are still moves to play")
+        # If there is no winner and there are no moves left the game is tied
+        if not self.game.has_winner and not moves_left: 
+            print("The game is a tie!")
+            return True
+        else:
+            print("This is not a tie...")
+            return False
 
     def toggle_player(self):
         """Return a toggled player."""
@@ -88,4 +103,3 @@ class Game:
             for col, _ in enumerate(row_content):
                 row_content[col] = Move(row, col)
         self._has_winner = False
-        self.winner_combo = []
